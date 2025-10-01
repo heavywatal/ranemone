@@ -11,6 +11,13 @@ Description: ANEMONE DB is a database for biodiversity surveys based on
 License: MIT + file LICENSE
 URL: https://github.com/heavywatal/ranemone
 BugReports: https://github.com/heavywatal/ranemone/issues
+Imports:
+    dplyr,
+    fs,
+    purrr,
+    readr,
+    rlang,
+    tidyr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
