@@ -12,6 +12,7 @@ ANEMONE DB is a database for biodiversity surveys based on environmental DNA met
 Useful links:
 \itemize{
   \item \url{https://github.com/heavywatal/ranemone}
+  \item \url{https://heavywatal.github.io/ranemone/}
   \item Report bugs at \url{https://github.com/heavywatal/ranemone/issues}
 }
 
