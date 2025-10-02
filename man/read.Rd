@@ -8,7 +8,7 @@ read_tsv_xz(filename, ..., limit = 250L)
 }
 \arguments{
 \item{filename}{A filename to read.
-Files are searched recursively in the path returned by \code{\link[=data_path]{data_path()}}.
+Files are searched recursively in the path returned by \code{\link[=directory_prefix]{directory_prefix()}}.
 It should be one of the following:
 \itemize{
 \item \code{community_qc3nn_target.tsv.xz}
@@ -33,10 +33,11 @@ but subsequent runs will be very quick because the results are cached.
 }
 \examples{
 \dontrun{
-
 ranemone::read_tsv_xz("sample.tsv.xz")
 ranemone::read_tsv_xz("experiment.tsv.xz")
 ranemone::read_tsv_xz("community_qc3nn_target.tsv.xz")
-
 }
+}
+\seealso{
+\url{https://db.anemone.bio/about-data/}
 }

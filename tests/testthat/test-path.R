@@ -1,12 +1,12 @@
-test_that("data_path works", {
+test_that("directory_prefix works", {
   temp = fs::path(tempdir())
   withr::with_options(
-    list(ranemone.data_path = temp),
-    expect_identical(data_path(), temp)
+    list(ranemone.directory_prefix = temp),
+    expect_identical(directory_prefix(), temp)
   )
-  extdata = fs::path(system.file("extdata", "data_path", package = "ranemone"))
+  extdata = fs::path(system.file("extdata", "directory_prefix", package = "ranemone"))
   withr::with_options(
-    list(ranemone.data_path = NULL),
-    expect_identical(data_path(), extdata)
+    list(ranemone.directory_prefix = NULL),
+    expect_identical(directory_prefix(), extdata)
   )
 })

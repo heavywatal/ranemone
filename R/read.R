@@ -4,8 +4,9 @@
 #' and this package provides efficient ways to read and process them.
 #' It may take a while to run them for the first time,
 #' but subsequent runs will be very quick because the results are cached.
+#' @seealso <https://db.anemone.bio/about-data/>
 #' @param filename A filename to read.
-#' Files are searched recursively in the path returned by [data_path()].
+#' Files are searched recursively in the path returned by [directory_prefix()].
 #' It should be one of the following:
 #' * `community_qc3nn_target.tsv.xz`
 #' * `community_qc_target.tsv.xz`
@@ -19,11 +20,9 @@
 #' @export
 #' @examples
 #' \dontrun{
-#'
 #' ranemone::read_tsv_xz("sample.tsv.xz")
 #' ranemone::read_tsv_xz("experiment.tsv.xz")
 #' ranemone::read_tsv_xz("community_qc3nn_target.tsv.xz")
-#'
 #' }
 read_tsv_xz = function(filename, ..., limit = 250L) {
   cache_file = cache_dir() / filename
