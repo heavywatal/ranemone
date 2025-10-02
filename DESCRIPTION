@@ -9,7 +9,8 @@ Description: ANEMONE DB is a database for biodiversity surveys based on
     Ecological Integration Lab. at Tohoku University. This package
     provides an utility to analyze data from ANEMONE DB.
 License: MIT + file LICENSE
-URL: https://github.com/heavywatal/ranemone
+URL: https://github.com/heavywatal/ranemone,
+    https://heavywatal.github.io/ranemone/
 BugReports: https://github.com/heavywatal/ranemone/issues
 Imports:
     dplyr,
