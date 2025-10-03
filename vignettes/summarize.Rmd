@@ -1,0 +1,78 @@
+---
+title: "Summarizing data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Summarizing data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+## Setup
+
+Load packages.
+[tidyverse](https://www.tidyverse.org/) is a collection of useful packages for data science.
+```{r, setup}
+#| eval: false
+# install.packages("pak")
+# pak::pak("tidyverse")
+library(conflicted) # for safety
+library(tidyverse)
+library(ranemone)
+```
+
+Set options for your data and cache directories.
+See the [Get started](ranemone.html) page for details.
+```{r, options}
+#| eval: false
+options(ranemone.directory_prefix = "~/db")
+options(ranemone.cache_path = "~/.cache/ranemone")
+```
+
+
+## Reading files
+
+Read all files with the given file name recursively in `directory_prefix()`.
+```{r, read}
+#| eval: false
+sample_df = ranemone::read_tsv_xz("sample.tsv.xz")
+experiment_df = ranemone::read_tsv_xz("experiment.tsv.xz")
+community_df = ranemone::read_tsv_xz("community_qc3nn_target.tsv.xz")
+```
+
+
+## Making community composition tables
+
+The community table contains many columns.
+You may want to select a smaller number of columns for analysis.
+```{r, select}
+#| eval: false
+dim(community_df)
+str(community_df)
+
+comm = community_df |>
+  dplyr::select(samplename, family, genus, species, sequence, nreads, ncopiesperml)
+dim(comm)
+str(comm)
+print(comm)
+```
+
+`tidyr::pivot_wider()` is useful to obtain a community composition matrix in wider format,
+```{r, pivot-wider}
+#| eval: false
+species_df = comm |>
+  tidyr::pivot_wider(
+    id_cols = samplename,
+    names_from = species,
+    names_sort = TRUE,
+    values_from = ncopiesperml,
+    values_fill = 0,
+    values_fn = \(x) sum(x, na.rm = TRUE)
+  )
+
+dim(species_df)
+
+readr::write_tsv(species_df, "species.tsv", na = "NA")
+```
+You can replace `species` with `genus`, `family`, or other levels as needed.
+

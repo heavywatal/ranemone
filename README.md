@@ -19,3 +19,6 @@ You can install the development version from [GitHub](https://github.com/):
 # install.packages("pak")
 pak::pak("heavywatal/ranemone")
 ```
+
+See ["Get started"](https://heavywatal.github.io/ranemone/articles/ranemone.html)
+for downloading data from ANEMONE DB and reading them into R.
