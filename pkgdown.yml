@@ -3,7 +3,8 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   ranemone: ranemone.html
-last_built: 2025-10-02T16:31Z
+  summarize: summarize.html
+last_built: 2025-10-03T09:33Z
 urls:
   reference: https://heavywatal.github.io/ranemone/reference
   article: https://heavywatal.github.io/ranemone/articles
