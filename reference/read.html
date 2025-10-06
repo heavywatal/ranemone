@@ -52,7 +52,7 @@ but subsequent runs will be very quick because the results are cached.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_tsv_xz</span><span class="op">(</span><span class="va">filename</span>, <span class="va">...</span>, limit <span class="op">=</span> <span class="fl">250L</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_tsv_xz</span><span class="op">(</span><span class="va">filename</span>, <span class="va">...</span>, limit <span class="op">=</span> <span class="fl">250L</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -76,6 +76,10 @@ It should be one of the following:</p><ul><li><p><code>community_qc3nn_target.ts
 
 <dt id="arg-limit">limit<a class="anchor" aria-label="anchor" href="#arg-limit"></a></dt>
 <dd><p>Maximum number of files to read at once.</p></dd>
+
+
+<dt id="arg-force">force<a class="anchor" aria-label="anchor" href="#arg-force"></a></dt>
+<dd><p>Set to <code>TRUE</code> to ignore and overwrite existing files in <code><a href="cache-dir.html">cache_dir()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
