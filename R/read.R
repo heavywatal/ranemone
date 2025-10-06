@@ -15,6 +15,7 @@
 #' * `sample.tsv.xz`
 #' @param ... Additional arguments passed to [readr::read_tsv()].
 #' @param limit Maximum number of files to read at once.
+#' @param force Set to `TRUE` to ignore and overwrite existing files in [cache_dir()].
 #' @returns A concatenated data frame.
 #' @rdname read
 #' @export
@@ -24,9 +25,9 @@
 #' ranemone::read_tsv_xz("experiment.tsv.xz")
 #' ranemone::read_tsv_xz("community_qc3nn_target.tsv.xz")
 #' }
-read_tsv_xz = function(filename, ..., limit = 250L) {
+read_tsv_xz = function(filename, ..., limit = 250L, force = FALSE) {
   cache_file = cache_dir() / filename
-  if (!fs::file_exists(cache_file)) {
+  if (force || !fs::file_exists(cache_file)) {
     x = read_tsv_xz_impl(filename, ..., limit = limit)
     fs::dir_create(fs::path_dir(cache_file))
     readr::write_tsv(x, cache_file, na = "")

@@ -3,13 +3,14 @@
 #' Some expensive operations are cached to avoid recomputing them.
 #' Intermediate results are stored in a cache directory.
 #' Users can set it via `ranemone.cache_dir` option.
-#' The default is set with [tools::R_user_dir()].
+#' The default is set with [tools::R_user_dir()], which persists across R sessions.
 #'
 #' General recommendation is to set it to a persistent directory with easy access,
 #' such as `~/.cache/ranemone`, not a temporary directory like [tempdir()].
-#' If you are working on a shared machine with other users,
-#' setting the same cache directory will allow you to share the cache.
-#'
+#' Setting it to `NA` or `FALSE` will make a new temporary directory each time
+#' [cache_dir()] is called, which virtually disables caching (not recommended).
+#' You can share the cache directory with other users on the same machine by
+#' setting it to a common directory, such as `/tmp/ranemone-cache`.
 #' @returns `cache_dir()` returns the path to the cache directory.
 #' @rdname cache-dir
 #' @export
@@ -25,7 +26,13 @@
 #'
 #' options(old) # reset for this example, not needed in real use
 cache_dir = function() {
-  fs::path(getOption("ranemone.cache_dir", tools::R_user_dir("ranemone", "cache")))
+  x = getOption("ranemone.cache_dir", tools::R_user_dir("ranemone", "cache"))
+  if (is.na(x) || isFALSE(x)) {
+    x = tempfile("ranemone-cache")
+  } else if (!nzchar(x)) {
+    x = "."
+  }
+  fs::path(x)
 }
 
 call_cache = function(.f, .x, ...) {

@@ -13,13 +13,15 @@ cache_dir()
 Some expensive operations are cached to avoid recomputing them.
 Intermediate results are stored in a cache directory.
 Users can set it via \code{ranemone.cache_dir} option.
-The default is set with \code{\link[tools:userdir]{tools::R_user_dir()}}.
+The default is set with \code{\link[tools:userdir]{tools::R_user_dir()}}, which persists across R sessions.
 }
 \details{
 General recommendation is to set it to a persistent directory with easy access,
 such as \verb{~/.cache/ranemone}, not a temporary directory like \code{\link[=tempdir]{tempdir()}}.
-If you are working on a shared machine with other users,
-setting the same cache directory will allow you to share the cache.
+Setting it to \code{NA} or \code{FALSE} will make a new temporary directory each time
+\code{\link[=cache_dir]{cache_dir()}} is called, which virtually disables caching (not recommended).
+You can share the cache directory with other users on the same machine by
+setting it to a common directory, such as \verb{/tmp/ranemone-cache}.
 }
 \examples{
 old = options(ranemone.cache_dir = "~/.cache/ranemone-example")

@@ -4,7 +4,7 @@
 \alias{read_tsv_xz}
 \title{Read files recursively in the ANEMONE DB data directory.}
 \usage{
-read_tsv_xz(filename, ..., limit = 250L)
+read_tsv_xz(filename, ..., limit = 250L, force = FALSE)
 }
 \arguments{
 \item{filename}{A filename to read.
@@ -21,6 +21,8 @@ It should be one of the following:
 \item{...}{Additional arguments passed to \code{\link[readr:read_delim]{readr::read_tsv()}}.}
 
 \item{limit}{Maximum number of files to read at once.}
+
+\item{force}{Set to \code{TRUE} to ignore and overwrite existing files in \code{\link[=cache_dir]{cache_dir()}}.}
 }
 \value{
 A concatenated data frame.
