@@ -18,6 +18,7 @@ Imports:
     purrr,
     readr,
     rlang,
+    stringr,
     tidyr
 Suggests:
     knitr,

@@ -39,12 +39,16 @@ read_tsv_xz_impl = function(filename, ..., limit = 250L) {
     warning("filename should be one of ", toString(.filenames), call. = FALSE)
   }
   prefix = call_cache(list_sample_dirs, data_path())
-  is_39cols = fs::path_file(prefix) %in% .samples39cols
+  sample_name = fs::path_file(prefix)
+  is_39cols = sample_name %in% .samples39cols # workaround
   x40 = read_many_tsv(prefix[!is_39cols] / filename, ..., limit = limit)
   x39 = readr::read_tsv(prefix[is_39cols] / filename, ...)
   x = dplyr::bind_rows(x40, x39)
   if (filename %in% c("experiment.tsv.xz", "sample.tsv.xz")) {
     x = pivot_wider_key_value(x)
+    if ("salinity" %in% names(x)) { # workaround for .sample2dots
+      x = dplyr::mutate(x, salinity = stringr::str_replace(.data$salinity, "\\.+", "."))
+    }
   }
   x
 }
@@ -93,4 +97,10 @@ split_vector = function(x, size) {
   "2021NipponYusenRUN01__20210922T0300-NYK-2021-PirikaMosiriMaru-St7__MiFish",
   "2021NipponYusenRUN01__20210925T0300-NYK-2021-PirikaMosiriMaru-St8-NC__MiFish",
   "2021NipponYusenRUN01__20210925T0300-NYK-2021-PirikaMosiriMaru-St8__MiFish"
+)
+
+# duplicated dots like 3..39 and 3..44
+.samples2dots = c(
+  "2022KibanSRUN01__20210628T0100-SMB-SugashimaRinkai__MiFish",
+  "2020KibanSRUN01__20200702T0530-RUI-Iriomote__MiFish"
 )
