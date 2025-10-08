@@ -58,7 +58,7 @@ You can check and change the cache directory as follows:
 ```{r, cache}
 #| eval: false
 ranemone::cache_dir()
-options(ranemone.cache_path = "~/.cache/ranemone")
+options(ranemone.cache_dir = "~/.cache/ranemone")
 ranemone::cache_dir()
 ```
 
