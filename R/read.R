@@ -13,6 +13,8 @@
 #' * `community_standard.tsv.xz`
 #' * `experiment.tsv.xz`
 #' * `sample.tsv.xz`
+#' @param compress Compression method to use: "gz", "bz2", "xz" or "".
+#' If `NULL` (default), the same one as the input file is used.
 #' @param ... Additional arguments passed to [readr::read_tsv()].
 #' @param limit Maximum number of files to read at once.
 #' @param force Set to `TRUE` to ignore and overwrite existing files in [cache_dir()].
@@ -25,8 +27,11 @@
 #' ranemone::read_tsv_xz("experiment.tsv.xz")
 #' ranemone::read_tsv_xz("community_qc3nn_target.tsv.xz")
 #' }
-read_tsv_xz = function(filename, ..., limit = 250L, force = FALSE) {
+read_tsv_xz = function(filename, compress = NULL, ..., limit = 250L, force = FALSE) {
   cache_file = cache_dir() / filename
+  if (!is.null(compress)) {
+    cache_file = fs::path_ext_set(cache_file, compress)
+  }
   if (force || !fs::file_exists(cache_file)) {
     x = read_tsv_xz_impl(filename, ..., limit = limit)
     fs::dir_create(fs::path_dir(cache_file))

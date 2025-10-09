@@ -4,7 +4,7 @@
 \alias{read_tsv_xz}
 \title{Read files recursively in the ANEMONE DB data directory.}
 \usage{
-read_tsv_xz(filename, ..., limit = 250L, force = FALSE)
+read_tsv_xz(filename, compress = NULL, ..., limit = 250L, force = FALSE)
 }
 \arguments{
 \item{filename}{A filename to read.
@@ -17,6 +17,9 @@ It should be one of the following:
 \item \code{experiment.tsv.xz}
 \item \code{sample.tsv.xz}
 }}
+
+\item{compress}{Compression method to use: "gz", "bz2", "xz" or "".
+If \code{NULL} (default), the same one as the input file is used.}
 
 \item{...}{Additional arguments passed to \code{\link[readr:read_delim]{readr::read_tsv()}}.}
 
