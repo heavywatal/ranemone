@@ -12,6 +12,8 @@ License: MIT + file LICENSE
 URL: https://github.com/heavywatal/ranemone,
     https://heavywatal.github.io/ranemone/
 BugReports: https://github.com/heavywatal/ranemone/issues
+Depends:
+    R (>= 4.4.0)
 Imports:
     dplyr,
     fs,
