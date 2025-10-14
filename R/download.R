@@ -37,11 +37,12 @@
 #' fs::dir_ls(directory_prefix()) # "db.anemone.bio"
 #' }
 wget_recursive = function(
-    rel_url = "dist/",
-    opts = c("--reject=.fastq.xz,.png", "--no-verbose"),
-    ...,
-    user = getOption("ranemone.user"),
-    password = getOption("ranemone.password")) {
+  rel_url = "dist/",
+  opts = c("--reject=.fastq.xz,.png", "--no-verbose"),
+  ...,
+  user = getOption("ranemone.user"),
+  password = getOption("ranemone.password")
+) {
   if (is.null(user)) {
     stop("Set `user` or options(ranemone.user=...)", call. = FALSE)
   }
