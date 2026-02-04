@@ -41,7 +41,7 @@ community_df = ranemone::read_tsv_xz("community_qc3nn_target.tsv.xz")
 ```
 
 
-## Making community composition tables
+## Using community tables
 
 The community table contains many columns.
 You may want to select a smaller number of columns for analysis.
@@ -52,27 +52,35 @@ str(community_df)
 
 comm = community_df |>
   dplyr::select(samplename, family, genus, species, sequence, nreads, ncopiesperml)
+
 dim(comm)
 str(comm)
 print(comm)
 ```
 
-`tidyr::pivot_wider()` is useful to obtain a community composition matrix in wider format,
-```{r, pivot-wider}
+Alpha diversity can be calculated using the `ncopiesperml` column
+after aggregating them for each species in each sample.
+```{r, summarize}
 #| eval: false
-species_df = comm |>
-  tidyr::pivot_wider(
-    id_cols = samplename,
-    names_from = species,
-    names_sort = TRUE,
-    values_from = ncopiesperml,
-    values_fill = 0,
-    values_fn = \(x) sum(x, na.rm = TRUE)
-  )
+species_df = community_df |>
+  ranemone::summarize_ncopies(.by = species)
 
 dim(species_df)
+str(species_df)
+print(species_df)
 
-readr::write_tsv(species_df, "species.tsv", na = "NA")
+ranemone::summarize_alpha_diversity(species_df)
 ```
 You can replace `species` with `genus`, `family`, or other levels as needed.
 
+
+## Making community composition tables
+
+A community composition matrix in wider format is also supported.
+```{r, pivot-wider}
+#| eval: false
+species_mat = community_df |>
+  ranemone::pivot_wider_ncopies(.by = species)
+
+ranemone::calc_alpha_div(species_mat)
+```
