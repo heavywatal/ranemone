@@ -92,7 +92,7 @@ a collection of useful packages for data science.</p>
 <span><span class="va">community_df</span> <span class="op">=</span> <span class="fu">ranemone</span><span class="fu">::</span><span class="fu"><a href="../reference/read.html">read_tsv_xz</a></span><span class="op">(</span><span class="st">"community_qc3nn_target.tsv.xz"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="making-community-composition-tables">Making community composition tables<a class="anchor" aria-label="anchor" href="#making-community-composition-tables"></a>
+<h2 id="using-community-tables">Using community tables<a class="anchor" aria-label="anchor" href="#using-community-tables"></a>
 </h2>
 <p>The community table contains many columns. You may want to select a
 smaller number of columns for analysis.</p>
@@ -102,27 +102,33 @@ smaller number of columns for analysis.</p>
 <span></span>
 <span><span class="va">comm</span> <span class="op">=</span> <span class="va">community_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">samplename</span>, <span class="va">family</span>, <span class="va">genus</span>, <span class="va">species</span>, <span class="va">sequence</span>, <span class="va">nreads</span>, <span class="va">ncopiesperml</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">comm</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">comm</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">comm</span><span class="op">)</span></span></code></pre></div>
-<p><code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">tidyr::pivot_wider()</a></code> is useful to obtain a community
-composition matrix in wider format,</p>
+<p>Alpha diversity can be calculated using the <code>ncopiesperml</code>
+column after aggregating them for each species in each sample.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">species_df</span> <span class="op">=</span> <span class="va">comm</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span></span>
-<span>    id_cols <span class="op">=</span> <span class="va">samplename</span>,</span>
-<span>    names_from <span class="op">=</span> <span class="va">species</span>,</span>
-<span>    names_sort <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    values_from <span class="op">=</span> <span class="va">ncopiesperml</span>,</span>
-<span>    values_fill <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>    values_fn <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">species_df</span> <span class="op">=</span> <span class="va">community_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ranemone</span><span class="fu">::</span><span class="fu"><a href="../reference/aggregate.html">summarize_ncopies</a></span><span class="op">(</span>.by <span class="op">=</span> <span class="va">species</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">species_df</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">species_df</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">species_df</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_tsv</a></span><span class="op">(</span><span class="va">species_df</span>, <span class="st">"species.tsv"</span>, na <span class="op">=</span> <span class="st">"NA"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">ranemone</span><span class="fu">::</span><span class="fu"><a href="../reference/diversity.html">summarize_alpha_diversity</a></span><span class="op">(</span><span class="va">species_df</span><span class="op">)</span></span></code></pre></div>
 <p>You can replace <code>species</code> with <code>genus</code>,
 <code>family</code>, or other levels as needed.</p>
+</div>
+<div class="section level2">
+<h2 id="making-community-composition-tables">Making community composition tables<a class="anchor" aria-label="anchor" href="#making-community-composition-tables"></a>
+</h2>
+<p>A community composition matrix in wider format is also supported.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">species_mat</span> <span class="op">=</span> <span class="va">community_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ranemone</span><span class="fu">::</span><span class="fu"><a href="../reference/aggregate.html">pivot_wider_ncopies</a></span><span class="op">(</span>.by <span class="op">=</span> <span class="va">species</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ranemone</span><span class="fu">::</span><span class="fu"><a href="../reference/diversity.html">calc_alpha_div</a></span><span class="op">(</span><span class="va">species_mat</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -135,7 +141,7 @@ composition matrix in wider format,</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

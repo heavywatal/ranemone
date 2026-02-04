@@ -1,0 +1,48 @@
+# ranemone
+
+*ranemone* is an R interface to [ANEMONE DB](https://db.anemone.bio/), a
+database for biodiversity surveys based on environmental DNA
+metabarcoding. It is managed by Dr. Michio Kondoh, Ecological
+Integration Lab. at Tohoku University. This package provides an utility
+to analyze data from ANEMONE DB.
+
+## Installation
+
+You can install the development version from
+[GitHub](https://github.com/):
+
+``` r
+# install.packages("pak")
+pak::pak("heavywatal/ranemone")
+```
+
+See [“Get
+started”](https://heavywatal.github.io/ranemone/articles/ranemone.html)
+for downloading data from ANEMONE DB and reading them into R.
+
+# Package index
+
+## All functions
+
+- [`summarize_ncopies()`](https://heavywatal.github.io/ranemone/reference/aggregate.md)
+  [`pivot_wider_ncopies()`](https://heavywatal.github.io/ranemone/reference/aggregate.md)
+  : Summarize community data by species, genus, family, etc.
+- [`cache_dir()`](https://heavywatal.github.io/ranemone/reference/cache-dir.md)
+  : Utilities for caching
+- [`summarize_alpha_diversity()`](https://heavywatal.github.io/ranemone/reference/diversity.md)
+  [`calc_alpha_div()`](https://heavywatal.github.io/ranemone/reference/diversity.md)
+  : Calculate alpha diversity indices
+- [`wget_recursive()`](https://heavywatal.github.io/ranemone/reference/download.md)
+  : Download data from ANEMONE DB
+- [`directory_prefix()`](https://heavywatal.github.io/ranemone/reference/path.md)
+  : Get the prefix path to the ANEMONE DB data directory.
+- [`read_tsv_xz()`](https://heavywatal.github.io/ranemone/reference/read.md)
+  : Read files recursively in the ANEMONE DB data directory.
+
+# Articles
+
+### All vignettes
+
+- [ranemone](https://heavywatal.github.io/ranemone/articles/ranemone.md):
+- [Summarizing
+  data](https://heavywatal.github.io/ranemone/articles/summarize.md):
