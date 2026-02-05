@@ -3,11 +3,14 @@
 \name{summarize_ncopies}
 \alias{summarize_ncopies}
 \alias{pivot_wider_ncopies}
+\alias{distinct_taxonomy}
 \title{Summarize community data by species, genus, family, etc.}
 \usage{
 summarize_ncopies(community_df, .by = .data$species, rm_unidentified = TRUE)
 
 pivot_wider_ncopies(community_df, .by = .data$species, rm_unidentified = TRUE)
+
+distinct_taxonomy(community_df, rm_unidentified = TRUE)
 }
 \arguments{
 \item{community_df}{A community data frame,
@@ -35,5 +38,7 @@ genus_df = ranemone::summarize_ncopies(community_df, .by = genus, rm_unidentifie
 
 species_mat = ranemone::pivot_wider_ncopies(community_df, .by = species)
 family_mat = ranemone::pivot_wider_ncopies(community_df, .by = family, rm_unidentified = FALSE)
+
+taxonomy = ranemone::distinct_taxonomy(community_df)
 }
 }

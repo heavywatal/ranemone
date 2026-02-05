@@ -58,6 +58,12 @@ str(comm)
 print(comm)
 ```
 
+Taxonomy of available species can be extracted with a single function.
+```{r, taxonomy}
+#| eval: false
+taxonomy = community_df |> ranemone::distinct_taxonomy()
+```
+
 Alpha diversity can be calculated using the `ncopiesperml` column
 after aggregating them for each species in each sample.
 ```{r, summarize}
@@ -69,7 +75,7 @@ dim(species_df)
 str(species_df)
 print(species_df)
 
-ranemone::summarize_alpha_diversity(species_df)
+diversity = ranemone::summarize_alpha_diversity(species_df)
 ```
 You can replace `species` with `genus`, `family`, or other levels as needed.
 

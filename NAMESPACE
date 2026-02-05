@@ -3,6 +3,7 @@
 export(cache_dir)
 export(calc_alpha_div)
 export(directory_prefix)
+export(distinct_taxonomy)
 export(pivot_wider_ncopies)
 export(read_tsv_xz)
 export(summarize_alpha_diversity)

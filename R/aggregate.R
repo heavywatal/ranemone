@@ -17,6 +17,8 @@
 #'
 #' species_mat = ranemone::pivot_wider_ncopies(community_df, .by = species)
 #' family_mat = ranemone::pivot_wider_ncopies(community_df, .by = family, rm_unidentified = FALSE)
+#'
+#' taxonomy = ranemone::distinct_taxonomy(community_df)
 #' }
 summarize_ncopies = function(community_df, .by = .data$species, rm_unidentified = TRUE) {
   if (rm_unidentified) {
@@ -49,6 +51,17 @@ pivot_wider_ncopies = function(community_df, .by = .data$species, rm_unidentifie
     tibble::column_to_rownames("samplename") |>
     as.matrix()
 }
+
+#' @rdname aggregate
+#' @export
+distinct_taxonomy = function(community_df, rm_unidentified = TRUE) {
+  if (rm_unidentified) {
+    community_df = remove_unidentified(community_df)
+  }
+  dplyr::distinct(community_df, !!!rlang::data_syms(.ranks))
+}
+
+.ranks = c("kingdom", "phylum", "class", "cohort", "order", "family", "genus", "species")
 
 remove_unidentified = function(community_df) {
   dplyr::filter(community_df, !stringr::str_detect(.data$species, "unidentified"))
