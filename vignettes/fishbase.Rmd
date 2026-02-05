@@ -1,0 +1,77 @@
+---
+title: "Using FishBase with ranemone"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using FishBase with ranemone}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+## Setup
+
+Load packages.
+[tidyverse](https://www.tidyverse.org/) is a collection of useful packages for data science.
+```{r, setup}
+#| eval: false
+# install.packages("pak")
+# pak::pak("tidyverse")
+library(conflicted) # for safety
+library(tidyverse)
+library(ranemone)
+```
+
+Set options for your data and cache directories.
+See the [Get started](ranemone.html) page for details.
+```{r, options}
+#| eval: false
+options(ranemone.directory_prefix = "~/db")
+options(ranemone.cache_dir = "~/.cache/ranemone")
+```
+
+
+## Reading FishBase tables
+
+Read and join FishBase tables: "species", "ecology", and "estimate".
+```{r, read-fishbase}
+#| eval: false
+fb_sp_ecol = ranemone::fb_species_ecology_estimate() |>
+  dplyr::mutate(species = paste(.data$Genus, .data$Species))
+```
+
+Individual tables can be read as well.
+```{r, read-individual}
+#| eval: false
+fb_species = ranemone::read_fb_tbl("species")
+fb_ecology = ranemone::read_fb_tbl("ecology")
+fb_estimate = ranemone::read_fb_tbl("estimate")
+```
+
+
+## Combining FishBase data with ANEMONE data
+
+Read ANEMONE community tables and summarize them into a species-level table.
+```{r, read-anemone}
+#| eval: false
+community_df = ranemone::read_tsv_xz("community_qc3nn_target.tsv.xz")
+species_df = community_df |>
+  ranemone::summarize_ncopies(.by = species)
+```
+
+Combine it with FishBase ecology data and summarize them for each sample.
+```{r, select}
+#| eval: false
+species_df |>
+  dplyr::left_join(fb_sp_ecol, by = "species") |>
+  dplyr::summarize(
+    FoodTroph_mean = mean(FoodTroph, na.rm = TRUE),
+    FoodTroph_wmean = weighted.mean(FoodTroph, ncopiesperml, na.rm = TRUE),
+    FoodTroph_coverage = sum(!is.na(FoodTroph)) / dplyr::n(),
+    TempPrefMean_mean = mean(TempPrefMean, na.rm = TRUE),
+    TempPrefMean_wmean = weighted.mean(TempPrefMean, ncopiesperml, na.rm = TRUE),
+    TempPrefMean_coverage = sum(!is.na(TempPrefMean)) / dplyr::n(),
+    .by = "samplename"
+  )
+```
+
+See [Summarizing data](summarize.html) for getting other statistics such as alpha diversity.

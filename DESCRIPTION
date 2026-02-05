@@ -15,10 +15,11 @@ BugReports: https://github.com/heavywatal/ranemone/issues
 Depends:
     R (>= 4.4.0)
 Imports:
-    dplyr,
+    dplyr (>= 1.2.0),
     fs,
     purrr,
     readr,
+    rfishbase,
     rlang,
     stringr,
     tidyr
