@@ -34,7 +34,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/summarize.html">Summarizing data</a></li>
+<li><a class="dropdown-item" href="../articles/fishbase.html">Using FishBase with ranemone</a></li>
+    <li><a class="dropdown-item" href="../articles/summarize.html">Summarizing data</a></li>
   </ul>
 </li>
       </ul>
@@ -106,9 +107,13 @@ smaller number of columns for analysis.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">comm</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">comm</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">comm</span><span class="op">)</span></span></code></pre></div>
+<p>Taxonomy of available species can be extracted with a single
+function.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">taxonomy</span> <span class="op">=</span> <span class="va">community_df</span> <span class="op">|&gt;</span> <span class="fu">ranemone</span><span class="fu">::</span><span class="fu"><a href="../reference/aggregate.html">distinct_taxonomy</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Alpha diversity can be calculated using the <code>ncopiesperml</code>
 column after aggregating them for each species in each sample.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">species_df</span> <span class="op">=</span> <span class="va">community_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ranemone</span><span class="fu">::</span><span class="fu"><a href="../reference/aggregate.html">summarize_ncopies</a></span><span class="op">(</span>.by <span class="op">=</span> <span class="va">species</span><span class="op">)</span></span>
 <span></span>
@@ -116,7 +121,7 @@ column after aggregating them for each species in each sample.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">species_df</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">species_df</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ranemone</span><span class="fu">::</span><span class="fu"><a href="../reference/diversity.html">summarize_alpha_diversity</a></span><span class="op">(</span><span class="va">species_df</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">diversity</span> <span class="op">=</span> <span class="fu">ranemone</span><span class="fu">::</span><span class="fu"><a href="../reference/diversity.html">summarize_alpha_diversity</a></span><span class="op">(</span><span class="va">species_df</span><span class="op">)</span></span></code></pre></div>
 <p>You can replace <code>species</code> with <code>genus</code>,
 <code>family</code>, or other levels as needed.</p>
 </div>
@@ -124,7 +129,7 @@ column after aggregating them for each species in each sample.</p>
 <h2 id="making-community-composition-tables">Making community composition tables<a class="anchor" aria-label="anchor" href="#making-community-composition-tables"></a>
 </h2>
 <p>A community composition matrix in wider format is also supported.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">species_mat</span> <span class="op">=</span> <span class="va">community_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ranemone</span><span class="fu">::</span><span class="fu"><a href="../reference/aggregate.html">pivot_wider_ncopies</a></span><span class="op">(</span>.by <span class="op">=</span> <span class="va">species</span><span class="op">)</span></span>
 <span></span>
