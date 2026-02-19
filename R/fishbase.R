@@ -35,8 +35,16 @@ read_fb_tbl = function(tbl, ..., force = FALSE) {
         dplyr::mutate(
           DietRemark = stringr::str_trim(.data$DietRemark),
           AddRems = stringr::str_replace_all(.data$AddRems, "\\s+", " "),
-          AssociationsWith = stringr::str_replace_all(.data$AssociationsWith, "\\s+", " "),
-          AssociationsRemarks = stringr::str_replace_all(.data$AssociationsRemarks, "\\s+", " ")
+          AssociationsWith = stringr::str_replace_all(
+            .data$AssociationsWith,
+            "\\s+",
+            " "
+          ),
+          AssociationsRemarks = stringr::str_replace_all(
+            .data$AssociationsRemarks,
+            "\\s+",
+            " "
+          )
         )
     }
     fs::dir_create(fs::path_dir(cache_file))
@@ -46,7 +54,13 @@ read_fb_tbl = function(tbl, ..., force = FALSE) {
   if (tbl == "species") {
     .cols = readr::cols(EggPic = "c", LifeCycle = "c", Profile = "c")
   } else if (tbl == "ecology") {
-    .cols = readr::cols(OHRemarks = "c", IHRemarks = "c", OIRemarks = "c", Circadian3 = "c", BioAspect3 = "c")
+    .cols = readr::cols(
+      OHRemarks = "c",
+      IHRemarks = "c",
+      OIRemarks = "c",
+      Circadian3 = "c",
+      BioAspect3 = "c"
+    )
   }
   readr::read_tsv(cache_file, col_types = .cols)
 }
@@ -60,7 +74,10 @@ fb_species_ecology_estimate = function(..., force = FALSE) {
     dplyr::select(.fb_species_cols)
   fb_ecology = read_fb_tbl("ecology", ..., force = force) |>
     dplyr::select(.fb_ecology_cols) |>
-    dplyr::summarize(dplyr::across(dplyr::everything(), unique_non_na), .by = .data$SpecCode)
+    dplyr::summarize(
+      dplyr::across(dplyr::everything(), unique_non_na),
+      .by = .data$SpecCode
+    )
   fb_estimate = read_fb_tbl("estimate", ..., force = force) |>
     dplyr::select(.fb_estimate_cols)
   res = fb_species |>

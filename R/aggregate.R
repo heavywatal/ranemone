@@ -20,7 +20,11 @@
 #'
 #' taxonomy = ranemone::distinct_taxonomy(community_df)
 #' }
-summarize_ncopies = function(community_df, .by = .data$species, rm_unidentified = TRUE) {
+summarize_ncopies = function(
+  community_df,
+  .by = .data$species,
+  rm_unidentified = TRUE
+) {
   if (rm_unidentified) {
     community_df = remove_unidentified(community_df)
   }
@@ -35,7 +39,11 @@ summarize_ncopies = function(community_df, .by = .data$species, rm_unidentified 
 #'   in wider format (samples x species).
 #' @rdname aggregate
 #' @export
-pivot_wider_ncopies = function(community_df, .by = .data$species, rm_unidentified = TRUE) {
+pivot_wider_ncopies = function(
+  community_df,
+  .by = .data$species,
+  rm_unidentified = TRUE
+) {
   if (rm_unidentified) {
     community_df = remove_unidentified(community_df)
   }
@@ -61,7 +69,16 @@ distinct_taxonomy = function(community_df, rm_unidentified = TRUE) {
   dplyr::distinct(community_df, !!!rlang::data_syms(.ranks))
 }
 
-.ranks = c("kingdom", "phylum", "class", "cohort", "order", "family", "genus", "species")
+.ranks = c(
+  "kingdom",
+  "phylum",
+  "class",
+  "cohort",
+  "order",
+  "family",
+  "genus",
+  "species"
+)
 
 remove_unidentified = function(community_df) {
   dplyr::filter(community_df, !stringr::str_detect(.data$species, "unidentified"))

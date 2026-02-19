@@ -23,13 +23,25 @@
 #'
 #' stopifnot(all.equal(res1, res2))
 #' }
-summarize_alpha_diversity = function(species_df, .by = .data$samplename, .groups = NULL) {
+summarize_alpha_diversity = function(
+  species_df,
+  .by = .data$samplename,
+  .groups = NULL
+) {
   species_df |>
-    dplyr::summarize(y = calc_alpha(.data$ncopiesperml), .by = {{ .by }}, .groups = .groups) |>
+    dplyr::summarize(
+      y = calc_alpha(.data$ncopiesperml),
+      .by = {{ .by }},
+      .groups = .groups
+    ) |>
     tidyr::unpack(.data$y) |>
     dplyr::mutate(
       invsimpson = 1 / (1 - .data$simpson),
-      pielou = dplyr::if_else(.data$richness > 1, .data$shannon / log(.data$richness), NA_real_)
+      pielou = dplyr::if_else(
+        .data$richness > 1,
+        .data$shannon / log(.data$richness),
+        NA_real_
+      )
     )
 }
 

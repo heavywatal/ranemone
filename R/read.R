@@ -52,15 +52,28 @@ read_tsv_xz_impl = function(filename, ..., limit = 250L) {
   x = dplyr::bind_rows(x40, x39)
   if (filename %in% c("experiment.tsv.xz", "sample.tsv.xz")) {
     x = pivot_wider_key_value(x)
-    if ("salinity" %in% names(x)) { # workaround for .sample2dots
+    if ("salinity" %in% names(x)) {
+      # workaround for .sample2dots
       x = dplyr::mutate(x, salinity = stringr::str_replace(.data$salinity, "\\.+", "."))
     }
   }
-  if ("collection_date" %in% names(x)) { # workaround for broken time format
-    x = dplyr::mutate(x, collection_date = stringr::str_replace(.data$collection_date, "T(\\d):", "T0\\1:"))
+  if ("collection_date" %in% names(x)) {
+    # workaround for broken time format
+    x = dplyr::mutate(
+      x,
+      collection_date = stringr::str_replace(.data$collection_date, "T(\\d):", "T0\\1:")
+    )
   }
-  if ("collection_date_local" %in% names(x)) { # workaround for broken time format
-    x = dplyr::mutate(x, collection_date_local = stringr::str_replace(.data$collection_date_local, "T(\\d):", "T0\\1:"))
+  if ("collection_date_local" %in% names(x)) {
+    # workaround for broken time format
+    x = dplyr::mutate(
+      x,
+      collection_date_local = stringr::str_replace(
+        .data$collection_date_local,
+        "T(\\d):",
+        "T0\\1:"
+      )
+    )
   }
   x
 }
