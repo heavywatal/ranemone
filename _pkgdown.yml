@@ -2,3 +2,17 @@ url: https://heavywatal.github.io/ranemone/
 template:
   bootstrap: 5
 llm-docs: false
+reference:
+  - title: Fetching and reading data
+    contents:
+      - wget_recursive
+      - read_tsv_xz
+      - read_fb_tbl
+  - title: Summarizing data
+    contents:
+      - summarize_ncopies
+      - summarize_alpha_diversity
+  - title: Utilities
+    contents:
+      - directory_prefix
+      - cache_dir
