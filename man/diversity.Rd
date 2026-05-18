@@ -13,9 +13,9 @@ calc_alpha_div(mat)
 \item{species_df}{A data frame summarized by species,
 e.g., output of \code{\link[=summarize_ncopies]{summarize_ncopies()}}.}
 
-\item{.by}{Passed to \code{\link[dplyr:summarise]{dplyr::summarize()}}.}
+\item{.by}{Passed to \code{\link[dplyr:summarize]{dplyr::summarize()}}.}
 
-\item{.groups}{Passed to \code{\link[dplyr:summarise]{dplyr::summarize()}}.}
+\item{.groups}{Passed to \code{\link[dplyr:summarize]{dplyr::summarize()}}.}
 
 \item{mat}{A community composition matrix (samples x species),
 e.g., output of \code{\link[=pivot_wider_ncopies]{pivot_wider_ncopies()}}.}

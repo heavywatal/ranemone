@@ -21,7 +21,7 @@ It should be one of the following:
 \item{compress}{Compression method to use: "gz", "bz2", "xz" or "".
 If \code{NULL} (default), the same one as the input file is used.}
 
-\item{...}{Additional arguments passed to \code{\link[readr:read_delim]{readr::read_tsv()}}.}
+\item{...}{Additional arguments passed to \code{\link[readr:read_tsv]{readr::read_tsv()}}.}
 
 \item{limit}{Maximum number of files to read at once.}
 
