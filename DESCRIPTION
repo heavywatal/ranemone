@@ -1,9 +1,11 @@
 Package: ranemone
 Title: R Interface to ANEMONE DB
 Version: 0.0.0.9000
-Authors@R:
-    person("Watal M.", "Iwasaki", , "heavywatal@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-4718-7605"))
+Authors@R: c(
+    	person("Watal M.", "Iwasaki", , "heavywatal@gmail.com", role = c("aut", "cre"),
+           	comment = c(ORCID = "0000-0002-4718-7605")),
+	person("Takamitsu", "Ohigashi", , "tkmtohgs1031@gmail.com", role = "ctb")
+	)
 Description: ANEMONE DB is a database for biodiversity surveys based on
     environmental DNA metabarcoding. It is managed by Dr. Michio Kondoh,
     Ecological Integration Lab. at Tohoku University. This package
