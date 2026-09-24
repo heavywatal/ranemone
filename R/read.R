@@ -37,7 +37,8 @@ read_tsv_xz = function(filename, compress = NULL, ..., limit = 250L, force = FAL
     fs::dir_create(fs::path_dir(cache_file))
     readr::write_tsv(x, cache_file, na = "")
   }
-  readr::read_tsv(cache_file, ...)
+  .cols = readr::cols(collection_date = "c", collection_date_local = "c")
+  readr::read_tsv(cache_file, ..., col_types = .cols)
 }
 
 read_tsv_xz_impl = function(filename, ..., limit = 250L) {
