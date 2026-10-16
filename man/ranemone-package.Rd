@@ -25,5 +25,10 @@ Authors:
   \item Watal M. Iwasaki \email{heavywatal@gmail.com} (\href{https://orcid.org/0000-0002-4718-7605}{ORCID})
 }
 
+Other contributors:
+\itemize{
+  \item Takamitsu Ohigashi \email{tkmtohgs1031@gmail.com} [contributor]
+}
+
 }
 \keyword{internal}
