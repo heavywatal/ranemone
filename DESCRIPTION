@@ -1,6 +1,6 @@
 Package: ranemone
 Title: R Interface to ANEMONE DB
-Version: 0.0.0.9000
+Version: 0.1.0.9000
 Authors@R: c(
     person("Watal M.", "Iwasaki", , "heavywatal@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4718-7605")),
