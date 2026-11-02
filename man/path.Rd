@@ -2,27 +2,36 @@
 % Please edit documentation in R/path.R
 \name{directory_prefix}
 \alias{directory_prefix}
+\alias{directory_prefix_local}
 \title{Get the prefix path to the ANEMONE DB data directory.}
 \usage{
 directory_prefix()
+
+directory_prefix_local()
 }
 \value{
 A path read from the option.
 }
 \description{
 \code{directory_prefix()} reads the \code{ranemone.directory_prefix} option set by users,
-and is used for downloading and reading files.
+and is used for downloading and reading public files.
 It should be a persistent directory with easy access, such as \verb{~/db},
 not a temporary directory like \code{\link[=tempdir]{tempdir()}}.
 }
 \details{
 If not set, it falls back to the \code{extdata/directory_prefix} in the package
 installation directory, which is mainly for testing and examples.
+
+\code{directory_prefix_local()} reads the \code{ranemone.directory_prefix_local} option
+set by users to read local files not available in the public ANEMONE DB.
 }
 \examples{
-old = options(ranemone.directory_prefix = "prefix/path/to/data")
-
+old = options(
+  ranemone.directory_prefix = "prefix/path/to/public/data",
+  ranemone.directory_prefix_local = "prefix/path/to/local/data"
+)
 ranemone::directory_prefix()
+ranemone::directory_prefix_local()
 
 options(old) # reset for this example, not needed in real use
 }

@@ -49,6 +49,18 @@ ranemone::wget_recursive("dist/MiFish/ANEMONE/")
 This command tries not to overwrite existing files.
 
 
+## Unpublished data
+
+You may have unpublished data in your local directory.
+Use `ranemone.directory_prefix_local` option to specify the directory for such data.
+Their file structure should be the same as those in the public [ANEMONE DB].
+```{r, prefix-local}
+#| eval: false
+options(ranemone.directory_prefix_local = "~/db/private")
+ranemone::directory_prefix_local()
+```
+
+
 ## Read files
 
 [ANEMONE DB] consists of many small files.
