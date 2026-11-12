@@ -47,34 +47,28 @@ read_tsv_xz_impl = function(filename, ..., limit = 250L) {
   }
   prefix = call_cache(list_sample_dirs, data_path())
   sample_name = fs::path_file(prefix)
-  is_39cols = sample_name %in% .samples39cols # workaround
-  x40 = read_many_tsv(prefix[!is_39cols] / filename, ..., limit = limit)
-  x39 = readr::read_tsv(prefix[is_39cols] / filename, ...)
-  x = dplyr::bind_rows(x40, x39)
+  if (stringr::str_detect(filename, "^community_")) {
+    is_39cols = sample_name %in% .samples39cols # workaround
+    x40 = read_many_tsv(prefix[!is_39cols] / filename, ..., limit = limit)
+    x39 = readr::read_tsv(prefix[is_39cols] / filename, ...)
+    x = dplyr::bind_rows(x40, x39)
+  } else {
+    x = read_many_tsv(prefix / filename, ..., limit = limit)
+  }
   if (filename %in% c("experiment.tsv.xz", "sample.tsv.xz")) {
     x = pivot_wider_key_value(x)
-    if ("salinity" %in% names(x)) {
-      # workaround for .sample2dots
-      x = dplyr::mutate(x, salinity = stringr::str_replace(.data$salinity, "\\.+", "."))
-    }
+  }
+  if ("salinity" %in% names(x)) {
+    # workaround for .sample2dots
+    x = dplyr::mutate(x, salinity = stringr::str_replace(.data$salinity, "\\.+", "."))
   }
   if ("collection_date" %in% names(x)) {
     # workaround for broken time format
-    x = dplyr::mutate(
-      x,
-      collection_date = stringr::str_replace(.data$collection_date, "T(\\d):", "T0\\1:")
-    )
+    x = dplyr::mutate(x, collection_date = pad_0h(.data$collection_date))
   }
   if ("collection_date_local" %in% names(x)) {
     # workaround for broken time format
-    x = dplyr::mutate(
-      x,
-      collection_date_local = stringr::str_replace(
-        .data$collection_date_local,
-        "T(\\d):",
-        "T0\\1:"
-      )
-    )
+    x = dplyr::mutate(x, collection_date_local = pad_0h(.data$collection_date_local))
   }
   x
 }
@@ -103,6 +97,10 @@ read_many_tsv = function(file, ..., limit) {
 split_vector = function(x, size) {
   group = seq.int(0L, length(x) - 1L) %/% size
   unname(split(x, group))
+}
+
+pad_0h = function(x) {
+  stringr::str_replace(x, "T(\\d):", "T0\\1:")
 }
 
 .filenames = c(
